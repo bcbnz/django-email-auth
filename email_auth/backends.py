@@ -25,7 +25,7 @@ class EmailBackend(ModelBackend):
     The following settings are used by the backend:
 
     * EMAIL_AUTH_DEFAULT_DOMAINS - default domain name(s) to try if the user
-      does not provide one. Must be either a string, or a list of strings. For
+      does not provide one. Must be either a string, or a tuple of strings. For
       example, if it is set to ('example.com', 'mysite.org'), and the user
       enters 'bob', the following steps will be performed:
 
@@ -60,10 +60,10 @@ class EmailBackend(ModelBackend):
         if domains is None:
             return None
 
-        # Domains must be a single string or a list
+        # Domains must be a single string or a tuple
         if isinstance(domains, str):
-            domains = [domains]
-        elif not isinstance(domains, list):
+            domains = (domains,)
+        elif not isinstance(domains, tuple):
             return None
 
         # Try each domain until we find a match
