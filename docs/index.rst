@@ -12,9 +12,12 @@ backend.
 Contents:
 =========
 
-* `Settings <settings.rst>`_
-* `Backends <backends.rst>`_
-* `GNU General Public License v3 <gpl3.rst>`_
+.. toctree::
+   :maxdepth: 1
+
+   settings
+   backends
+   gpl3
 
 License
 =======
