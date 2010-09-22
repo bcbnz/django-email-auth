@@ -45,7 +45,7 @@ class EmailBackend(ModelBackend):
         # Domain given
         if '@' in username:
             # Find the user
-            user = self.get_user(username)
+            user = self.get_user_from_email(username)
             if user is None:
                 return None
 
@@ -69,7 +69,7 @@ class EmailBackend(ModelBackend):
         # Try each domain until we find a match
         for domain in domains:
             email = '%s@%s' % (username, domain)
-            user = self.get_user(email)
+            user = self.get_user_from_email(email)
             if user is None:
                 continue
             if user.check_password(password):
@@ -78,7 +78,7 @@ class EmailBackend(ModelBackend):
         # Nothing found
         return None
 
-    def get_user(self, email):
+    def get_user_from_email(self, email):
         # Search for a user
         try:
             return User.objects.get(email=email)
