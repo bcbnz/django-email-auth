@@ -24,11 +24,16 @@ class EmailBackend(ModelBackend):
 
     The following settings are used by the backend:
 
-    * EMAIL_AUTH_DEFAULT_DOMAIN - if a username is entered without a domain,
-      this domain will be appended to create the email used to authenticate
-      the user. For example, if EMAIL_AUTH_DEFAULT_DOMAIN is 'example.com',
-      and the user enters 'bob', the backend will attempt to authenticate
-      'bob@example.com'.
+    * EMAIL_AUTH_DEFAULT_DOMAINS - default domain name(s) to try if the user
+      does not provide one. Must be either a string, or a list of strings. For
+      example, if it is set to ('example.com', 'mysite.org'), and the user
+      enters 'bob', the following steps will be performed:
+
+      1. Is there a user with the email address 'bob@example.com' in the
+         database? If so, is the password correct for this user? If so, this is
+         the user we want.
+      2. Does 'bob@mysite.org' appear in the database? If so, is the password
+         correct for this user? If so, this is the user we want.
 
     """
 
@@ -37,23 +42,46 @@ class EmailBackend(ModelBackend):
         if username is None:
             return None
 
-        # No domain given
-        if '@' not in username:
-            # Try using the domain given in the settings
-            domain = settings.EMAIL_AUTH_DEFAULT_DOMAIN
-            if domain is None:
+        # Domain given
+        if '@' in username:
+            # Find the user
+            user = self.get_user_from_email(username)
+            if user is None:
                 return None
-            else:
-                username = '%s@%s' % (username, domain)
 
+            # See if they match
+            if user.check_password(password):
+                return user
+            else:
+                return None
+
+        # No default domains
+        domains = settings.EMAIL_AUTH_DEFAULT_DOMAINS
+        if domains is None:
+            return None
+
+        # Domains must be a single string or a list
+        if isinstance(domains, str):
+            domains = [domains]
+        elif not isinstance(domains, list):
+            return None
+
+        # Try each domain until we find a match
+        for domain in domains:
+            email = '%s@%s' % (username, domain)
+            user = self.get_user_from_email(email)
+            if user is None:
+                continue
+            if user.check_password(password):
+                return user
+
+        # Nothing found
+        return None
+
+    def get_user_from_email(self, email):
         # Search for a user
         try:
-            user = User.objects.get(email=username)
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             return None
-
-        # Check their credentials
-        if user.check_password(password):
-            return user
-        else:
-            return None
+        return user
