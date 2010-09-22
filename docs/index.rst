@@ -2,12 +2,19 @@
 django-email-auth
 =================
 
-An authentication backend for `Django`_ projects which allows users to log in 
-with email addresses rather than usernames. It also provides the ability to 
+An authentication backend for `Django`_ projects which allows users to log in
+with email addresses rather than usernames. It also provides the ability to
 modify the behaviour of the Django admin to better integrate with the email
 backend.
 
 .. _`Django`: http://www.djangoproject.com
+
+Contents:
+=========
+
+* `Settings <settings.rst>`_
+* `Backends <backends.rst>`_
+* `GNU General Public License v3 <gpl3.rst>`_
 
 License
 =======
@@ -24,5 +31,5 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with django-email-auth.  If not, see http://www.gnu.org/licenses/.
+Version 3 of the GNU General Public License is available `here <gpl3.rst>`_,
+or online (along with any later versions) at http://www.gnu.org/licenses/.
