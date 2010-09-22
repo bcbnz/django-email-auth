@@ -13,11 +13,12 @@ Contents:
 =========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    settings
    backends
    forms
+   middleware
    gpl3
 
 License
