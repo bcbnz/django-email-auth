@@ -56,7 +56,7 @@ class EmailBackend(ModelBackend):
                 return None
 
         # No default domains
-        domains = settings.EMAIL_AUTH_DEFAULT_DOMAINS
+        domains = getattr(settings, 'EMAIL_AUTH_DEFAULT_DOMAINS', None)
         if domains is None:
             return None
 
