@@ -50,7 +50,7 @@
 <div class="section" id="email-auth-default-domains">
 <span id="default-domains"></span><h2>EMAIL_AUTH_DEFAULT_DOMAINS<a class="headerlink" href="#email-auth-default-domains" title="Permalink to this headline">¶</a></h2>
 <p>Default: <tt class="xref docutils literal"><span class="pre">None</span></tt></p>
-<p>A string, or list of strings, defining the domain(s) to try if the user enters
+<p>A string, or tuple of strings, defining the domain(s) to try if the user enters
 a username without a domain. For example, if it is set to:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">EMAIL_AUTH_DEFAULT_DOMAINS</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s">&#39;example.com&#39;</span><span class="p">,</span>
@@ -60,7 +60,7 @@ a username without a domain. For example, if it is set to:</p>
 </div>
 <p>and the user enters <tt class="docutils literal"><span class="pre">bob</span></tt>, then the backend will try to authenticate the user
 as <tt class="docutils literal"><span class="pre">bob&#64;example.com</span></tt> and then, if that fails, as <tt class="docutils literal"><span class="pre">bob&#64;mysite.org</span></tt>.</p>
-<p>If it is set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, or is not a string/list of strings, then only the
+<p>If it is set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, or is not a string/tuple of strings, then only the
 value the user enters will be used in the authentication attempt.</p>
 </div>
 </div>
