@@ -32,7 +32,7 @@ EmailBackend
       such as ``bob``), then any default domains given in the :ref:`default_domains`
       setting will be added to the username when attempting to authenticate.
 
-   .. function:: get_user(email)
+   .. function:: get_user_from_email(email)
 
       Get an user (an instance of the ``django.contrib.auth.models.User`` class)
       from the corresponding email address. If no such user exists, it returns

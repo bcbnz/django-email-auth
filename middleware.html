@@ -59,42 +59,50 @@ for more information on middleware.</p>
 <dt id="email_auth.middleware.EmailAuthMiddleware">
 <em class="property">class </em><tt class="descclassname">email_auth.middleware.</tt><tt class="descname">EmailAuthMiddleware</tt><a class="headerlink" href="#email_auth.middleware.EmailAuthMiddleware" title="Permalink to this definition">¶</a></dt>
 <dd><p>Many of the views in the Django administration interface use the
-<tt class="docutils literal"><span class="pre">&#64;staff_member_required</span></tt> decorator to ensure that the user has staff
-permissions. However, the built-in decorator provides its own login form
-rather than using the <tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt> specified in the settings. This has
+<tt class="docutils literal"><span class="pre">admin_view</span></tt> decorator from the <tt class="docutils literal"><span class="pre">django.contrib.admin.sites.AdminSite</span></tt>
+class to ensure that the user has the necessary permissions. Other views
+(such as the administration documentation) use the <tt class="docutils literal"><span class="pre">staff_member_required</span></tt>
+decorator from the <tt class="docutils literal"><span class="pre">django.contrib.admin.views.decorators</span></tt> module to check
+that the user is a staff member.</p>
+<p>The problem with this is that both decorators provide their own login forms
+rather than using the <tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt> specified in the settings. These have
 hard-coded field names (so the user is prompted for a username rather than a
-password). It also gives misleading error messages; for example, if the user
-enters their password wrong they are told that their username cannot contain
-the &#8216;&#64;&#8217; character. Finally, if they successfully log in but don&#8217;t have staff
-status, they are prompted to log in again rather than being told what the
-problem is.</p>
-<p>This piece of middleware overcomes this by replacing the decorator with a
-custom version. It redirects the user to the settings <tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt> when
+password). They also give misleading error messages; for example, if the
+user enters their password wrong they are told that their username cannot
+contain the &#8216;&#64;&#8217; character. Finally, if they successfully log in but don&#8217;t
+have the correct permission, they are prompted to log in again rather than
+being told what the problem is.</p>
+<p>This piece of middleware overcomes this by replacing the decorators with
+custom versions. They redirects the user to the settings <tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt> when
 needed, allowing any customisations made to the login view (such as custom
-authentication forms) to be used. If the user is logged in but does not have
-staff status, it uses the <tt class="docutils literal"><span class="pre">admin/not_staff.html</span></tt> template to tell them
-this. As a sanity check, it checks that they have an active account (this
-should have been done by the login view) and, if not, tells them so using
-the <tt class="docutils literal"><span class="pre">admin/inactive.html</span></tt> template.</p>
+authentication forms) to be used. If the user is logged in but doesn&#8217;t have
+the required permission to access page, the <tt class="docutils literal"><span class="pre">admin/permission_error.html</span></tt>
+template is used to inform the user. If staff status is required and they
+don&#8217;t have it, the <tt class="docutils literal"><span class="pre">admin/not_staff.html</span></tt> template is used. As a sanity
+check, it checks that they have an active account (this should have been
+done by the login view) and, if not, tells them so using the
+<tt class="docutils literal"><span class="pre">admin/inactive.html</span></tt> template.</p>
+<p><strong>It is recommended that you place this as the first piece of middleware to
+be used. Otherwise, earlier middleware may use the decorators prior to them
+being updated, thus ruining the backend integration.</strong></p>
 <p>For this to work correctly, you must:</p>
 <ul class="simple">
 <li>Configure <tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt> in your settings to point to your login view.</li>
 <li>Ensure your login view correctly handles the <tt class="docutils literal"><span class="pre">next</span></tt> parameter to
 redirect the user to the appropriate page after login.</li>
-<li>Make the <tt class="docutils literal"><span class="pre">admin/inactive.html</span></tt> and <tt class="docutils literal"><span class="pre">admin/not_staff.html</span></tt> templates
-available to the Django template loader. Templates are provided in the
-<tt class="docutils literal"><span class="pre">email_auth/templates</span></tt> directory of the project, or you can create your
-own using these as a guide.</li>
+<li>Make the <tt class="docutils literal"><span class="pre">admin/inactive.html</span></tt>, <tt class="docutils literal"><span class="pre">admin/permission_fail.html</span></tt> and
+<tt class="docutils literal"><span class="pre">admin/not_staff.html</span></tt> templates available to the Django template
+loader. Templates are provided in the <tt class="docutils literal"><span class="pre">email_auth/templates</span></tt> directory
+of the project, or you can create your own using these as a guide.</li>
 </ul>
-<p>It is recommended that you place this as the first piece of middleware to be
-used. If another piece of middleware above this directly generates a
-response, it may use the default decorator.</p>
 <dl class="function">
 <dt id="email_auth.middleware.EmailAuthMiddleware.process_request">
 <tt class="descname">process_request</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#email_auth.middleware.EmailAuthMiddleware.process_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Django calls this function for every request made. It replaces the
-<tt class="docutils literal"><span class="pre">django.contrib.admin.views.decorators.staff_member_required</span></tt> decorator
-with the custom version.</p>
+<tt class="docutils literal"><span class="pre">django.contrib.admin.views.decorators.staff_member_required</span></tt> and
+<tt class="docutils literal"><span class="pre">django.contrib.admin.sites.AdminSite.admin_view</span></tt> decorators with
+custom versions. It also regenerates the default admin site
+(<tt class="docutils literal"><span class="pre">django.contrib.admin.sites.site</span></tt>) to match.</p>
 </dd></dl>
 
 </dd></dl>
@@ -158,7 +166,7 @@ with the custom version.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2010, Blair Bonnett.
-      Last updated on Sep 22, 2010.
+      Last updated on Sep 23, 2010.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
     </div>
   </body>
