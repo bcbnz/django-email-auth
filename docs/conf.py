@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Extensions in use
-extensions = ['sphinx.ext.coverage']
+extensions = ['sphinx.ext.coverage', 'sphinxtogithub']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
