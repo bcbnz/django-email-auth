@@ -1,7 +1,7 @@
 Settings
 ========
 
-
+.. _default_domains:
 
 EMAIL_AUTH_DEFAULT_DOMAINS
 --------------------------

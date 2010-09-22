@@ -32,6 +32,8 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.
 html_theme = 'default'
 
+html_use_index = False
+
 # Format for timestamp.
 html_last_updated_fmt = '%b %d, %Y'
 
