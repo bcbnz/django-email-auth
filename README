@@ -1,0 +1,7 @@
+django-email-auth
+=================
+
+Goal
+----
+
+A fully integrated email authentication backend for the Django framework.
