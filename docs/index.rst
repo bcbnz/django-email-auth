@@ -17,6 +17,7 @@ Contents:
 
    settings
    backends
+   forms
    gpl3
 
 License
