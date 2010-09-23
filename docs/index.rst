@@ -2,10 +2,10 @@
 django-email-auth
 =================
 
-An authentication backend for `Django`_ projects which allows users to log in
-with email addresses rather than usernames. It also provides the ability to
-modify the behaviour of the Django admin to better integrate with the email
-backend.
+When asked to log a user in, `Django`_ uses one or more authentication backend
+classes to perform the authentication. The default backend requires a username
+and password. This project provides an email authentication backend, thus
+allowing users to log in with their email address and password.
 
 .. _`Django`: http://www.djangoproject.com
 
@@ -15,6 +15,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   obtain
    settings
    backends
    forms
