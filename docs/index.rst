@@ -18,7 +18,6 @@ Contents:
    settings
    backends
    forms
-   middleware
    gpl3
 
 License
