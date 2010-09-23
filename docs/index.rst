@@ -7,6 +7,9 @@ classes to perform the authentication. The default backend requires a username
 and password. This project provides an email authentication backend, thus
 allowing users to log in with their email address and password.
 
+This documentation describes how to obtain and install django-email-auth on
+your own Django-based website.
+
 .. _`Django`: http://www.djangoproject.com
 
 Contents:
@@ -16,6 +19,7 @@ Contents:
    :maxdepth: 2
 
    obtain
+   install
    settings
    backends
    forms
