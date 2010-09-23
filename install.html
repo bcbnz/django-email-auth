@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Settings &mdash; django-email-auth v1.0 documentation</title>
+    <title>Installation &mdash; django-email-auth v1.0 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,8 +22,8 @@
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-email-auth v1.0 documentation" href="index.html" />
-    <link rel="next" title="Backends" href="backends.html" />
-    <link rel="prev" title="Installation" href="install.html" />
+    <link rel="next" title="Settings" href="settings.html" />
+    <link rel="prev" title="Obtaining the code" href="obtain.html" />
  
 <script type="text/javascript" src="templatebuiltins.js"></script>
 <script type="text/javascript">
@@ -73,26 +73,60 @@
         <a title="Module index" href="py-modindex.html">Modules</a>
       </div>
       <div class="nav">
-    &laquo; <a href="install.html" title="Installation">previous</a> 
+    &laquo; <a href="obtain.html" title="Obtaining the code">previous</a> 
      |
     <a title="django-email-auth v1.0 documentation" href="index.html" accesskey="U">up</a>
    |
-    <a href="backends.html" title="Backends">next</a> &raquo;</div>
+    <a href="settings.html" title="Settings">next</a> &raquo;</div>
     </div>
     
     <div id="bd">
       <div id="yui-main">
         <div class="yui-b">
-          <div class="yui-g" id="settings">
+          <div class="yui-g" id="install">
             
-  <div class="section" id="settings">
-<h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="email-auth-default-domains">
-<span id="std:setting-EMAIL_AUTH_DEFAULT_DOMAINS"></span><h2>EMAIL_AUTH_DEFAULT_DOMAINS<a class="headerlink" href="#email-auth-default-domains" title="Permalink to this headline">¶</a></h2>
-<p>Default: <tt class="xref docutils literal"><span class="pre">None</span></tt></p>
-<p>A string, or tuple of strings, defining the domain(s) to try if the user enters
-a username without a domain. If it is set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, then only the value the
-user enters will be used in the authentication attempt.</p>
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-installation">
+<h2>Basic installation<a class="headerlink" href="#basic-installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Copy the <tt class="docutils literal"><span class="pre">email_auth</span></tt> folder to your project.</p>
+</li>
+<li><p class="first">Add <a class="reference internal" href="backends.html#email_auth.backends.EmailBackend" title="email_auth.backends.EmailBackend"><tt class="xref py py-class docutils literal"><span class="pre">email_auth.backends.EmailBackend</span></tt></a> to the
+<tt class="xref std std-setting docutils literal"><span class="pre">AUTHENTICATION_BACKENDS</span></tt> list in your settings. Note that Django
+tries the backends in the order specified in the settings. So if you want to
+try the email backend and fall back to the default (username) backend, you
+would specify the backends as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;email.auth.backends.EmailBackend&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth.backends.ModelBackend&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that there is no requirement to have the <tt class="xref py py-class docutils literal"><span class="pre">ModelBackend</span></tt> backend
+i.e., you can have the email backend as the only login method. For more
+details on how to specify the backends, see the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/auth/#specifying-authentication-backends">User authentication in
+Django</a>
+document.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="default-domains">
+<h2>Default domains<a class="headerlink" href="#default-domains" title="Permalink to this headline">¶</a></h2>
+<p>Emails are given in the form <tt class="docutils literal"><span class="pre">&lt;username&gt;&#64;&lt;domain&gt;</span></tt>. If many of your users
+will be logging in with email address with a common domain, you can specify a
+set of default domains through the <a class="reference internal" href="settings.html#std:setting-EMAIL_AUTH_DEFAULT_DOMAINS"><tt class="xref std std-setting docutils literal"><span class="pre">EMAIL_AUTH_DEFAULT_DOMAINS</span></tt></a>
+setting. If the user enters a username without a domain, the backend will then
+try the default domains (in order) to see if one successfully authenticates.
+For example, with the setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">EMAIL_AUTH_DEFAULT_DOMAINS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;example.com&#39;</span><span class="p">,</span>
+    <span class="s">&#39;mysite.org&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>if the user enters the username <tt class="docutils literal"><span class="pre">bob</span></tt>, the backend will try to authenticate
+them as <tt class="docutils literal"><span class="pre">bob&#64;example.com</span></tt> and then, if that fails, as <tt class="docutils literal"><span class="pre">bob&#64;mysite.org</span></tt>.</p>
 </div>
 </div>
 
@@ -108,8 +142,9 @@ user enters will be used in the authentication attempt.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Settings</a><ul>
-<li><a class="reference internal" href="#email-auth-default-domains">EMAIL_AUTH_DEFAULT_DOMAINS</a></li>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#basic-installation">Basic installation</a></li>
+<li><a class="reference internal" href="#default-domains">Default domains</a></li>
 </ul>
 </li>
 </ul>
@@ -117,10 +152,10 @@ user enters will be used in the authentication attempt.</p>
   <h3>Browse</h3>
   <ul>
     
-      <li>Prev: <a href="install.html">Installation</a></li>
+      <li>Prev: <a href="obtain.html">Obtaining the code</a></li>
     
     
-      <li>Next: <a href="backends.html">Backends</a></li>
+      <li>Next: <a href="settings.html">Settings</a></li>
     
   </ul>
   <h3>You are here:</h3>
@@ -128,14 +163,14 @@ user enters will be used in the authentication attempt.</p>
       <li>
         <a href="index.html">django-email-auth v1.0 documentation</a>
         
-        <ul><li>Settings</li></ul>
+        <ul><li>Installation</li></ul>
         
       </li>
   </ul>  
 
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="sources/settings.txt"
+    <li><a href="sources/install.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -162,11 +197,11 @@ user enters will be used in the authentication attempt.</p>
     
     <div id="ft">
       <div class="nav">
-    &laquo; <a href="install.html" title="Installation">previous</a> 
+    &laquo; <a href="obtain.html" title="Obtaining the code">previous</a> 
      |
     <a title="django-email-auth v1.0 documentation" href="index.html" accesskey="U">up</a>
    |
-    <a href="backends.html" title="Backends">next</a> &raquo;</div>
+    <a href="settings.html" title="Settings">next</a> &raquo;</div>
     </div>
   </div>
 
