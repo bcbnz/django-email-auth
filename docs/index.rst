@@ -8,7 +8,10 @@ and password. This project provides an email authentication backend, thus
 allowing users to log in with their email address and password.
 
 This documentation describes how to obtain and install django-email-auth on
-your own Django-based website.
+your own Django-based website. You may also want to see the `django-admin-loginpatches
+project <http://blairbonnett.github.com/django-admin-loginpatches>`_ to provide
+better integration of the email authentication backend into Django's
+admininstration system.
 
 .. _`Django`: http://www.djangoproject.com
 
