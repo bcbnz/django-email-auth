@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
+import sys
+
+# Add extension path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "_ext")))
+
 # Extensions in use
-extensions = ['sphinx.ext.coverage', 'sphinxtogithub']
+extensions = ['sphinx.ext.coverage', 'sphinxtogithub', 'djangodocs']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -15,7 +21,7 @@ copyright = u'2010, Blair Bonnett'
 
 # Version (x.y) and release (with alpha/beta etc.)
 version = '1.0'
-release = '1.0a1'
+release = '1.0'
 
 # Documents not to include
 unused_docs = []
@@ -30,9 +36,8 @@ pygments_style = 'sphinx'
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.
-html_theme = 'default'
-
-html_use_index = False
+html_theme_path = ['_theme']
+html_theme = 'djangodocs'
 
 # Format for timestamp.
 html_last_updated_fmt = '%b %d, %Y'
