@@ -35,6 +35,10 @@ class EmailBackend(ModelBackend):
       2. Does 'bob@mysite.org' appear in the database? If so, is the password
          correct for this user? If so, this is the user we want.
 
+    If multiple user accounts exist for an email address, they will be tested
+    in the order they are returned from the database until one is found for
+    which the password matches.
+
     """
 
     def authenticate(self, username=None, password=None):
@@ -45,15 +49,14 @@ class EmailBackend(ModelBackend):
         # Domain given
         if '@' in username:
             # Find the user
-            user = self.get_user_from_email(username)
-            if user is None:
-                return None
+            users = self.get_users_from_email(username)
+            for user in users:
+                # See if they match
+                if user.check_password(password):
+                    return user
 
-            # See if they match
-            if user.check_password(password):
-                return user
-            else:
-                return None
+            # Nobody found
+            return None
 
         # No default domains
         domains = getattr(settings, 'EMAIL_AUTH_DEFAULT_DOMAINS', None)
@@ -69,18 +72,17 @@ class EmailBackend(ModelBackend):
         # Try each domain until we find a match
         for domain in domains:
             email = '%s@%s' % (username, domain)
-            user = self.get_user_from_email(email)
-            if user is None:
-                continue
-            if user.check_password(password):
-                return user
+            users = self.get_users_from_email(email)
+            for user in users:
+                if user.check_password(password):
+                    return user
 
-        # Nothing found
+        # Nobody found
         return None
 
-    def get_user_from_email(self, email):
+    def get_users_from_email(self, email):
         # Search for a user
         try:
-            return User.objects.get(email=email)
+            return User.objects.filter(email=email)
         except User.DoesNotExist:
-            return None
+            return []
