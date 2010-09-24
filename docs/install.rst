@@ -30,12 +30,36 @@ will be logging in with email address with a common domain, you can specify a
 set of default domains through the :setting:`EMAIL_AUTH_DEFAULT_DOMAINS`
 setting. If the user enters a username without a domain, the backend will then
 try the default domains (in order) to see if one successfully authenticates.
-For example, with the setting::
+
+For example, suppose the default domains are::
 
     EMAIL_AUTH_DEFAULT_DOMAINS = (
         'example.com',
         'mysite.org',
     )
 
-if the user enters the username ``bob``, the backend will try to authenticate
+If the user enters the username ``bob``, the backend will try to authenticate
 them as ``bob@example.com`` and then, if that fails, as ``bob@mysite.org``.
+
+Multiple accounts
+-----------------
+
+If multiple accounts exist for the email address being checked, the backend
+will try them in the order they are retrieved from the database. Once an
+account is found for which the password matches, the backend will assume that
+is the correct user and not check any further accounts.
+
+As the :class:`django.contrib.auth.models.User` model does not specify a
+default order, the order they will be returned in is undefined and hence
+unpredictable. If you require them to be tested in a particular order, you
+can set the fields to order them by in the :setting:`EMAIL_AUTH_ORDERING`
+setting. For example, to sort the user by first name and then the date of their
+last login::
+
+    EMAIL_AUTH_ORDERING = (
+        'first_name',
+        'last_login',
+    )
+
+For more details on specifying ordering in Django, see the `QuerySet API
+documentation <http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields>`_.
