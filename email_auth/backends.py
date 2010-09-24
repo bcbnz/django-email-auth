@@ -63,11 +63,9 @@ class EmailBackend(ModelBackend):
         if domains is None:
             return None
 
-        # Domains must be a single string or a tuple
-        if isinstance(domains, str):
+        # Force it into a tuple to simplify logic
+        if not isinstance(domains, tuple):
             domains = (domains,)
-        elif not isinstance(domains, tuple):
-            return None
 
         # Try each domain until we find a match
         for domain in domains:
