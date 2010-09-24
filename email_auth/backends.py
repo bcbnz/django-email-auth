@@ -37,7 +37,8 @@ class EmailBackend(ModelBackend):
 
     If multiple user accounts exist for an email address, they will be tested
     in the order they are returned from the database until one is found for
-    which the password matches.
+    which the password matches. The sort order can be set through the
+    EMAIL_AUTH_ORDERING setting.
 
     """
 
@@ -46,10 +47,13 @@ class EmailBackend(ModelBackend):
         if username is None:
             return None
 
+        # Only load the ordering once per request
+        ordering = getattr(settings, 'EMAIL_AUTH_ORDERING', ())
+
         # Domain given
         if '@' in username:
             # Find the user
-            users = self.get_users_from_email(username)
+            users = self.get_users_from_email(username, ordering)
             for user in users:
                 # See if they match
                 if user.check_password(password):
@@ -70,7 +74,7 @@ class EmailBackend(ModelBackend):
         # Try each domain until we find a match
         for domain in domains:
             email = '%s@%s' % (username, domain)
-            users = self.get_users_from_email(email)
+            users = self.get_users_from_email(email, ordering)
             for user in users:
                 if user.check_password(password):
                     return user
@@ -78,9 +82,9 @@ class EmailBackend(ModelBackend):
         # Nobody found
         return None
 
-    def get_users_from_email(self, email):
+    def get_users_from_email(self, email, ordering):
         # Search for a user
         try:
-            return User.objects.filter(email=email)
+            return User.objects.filter(email=email).order_by(*ordering)
         except User.DoesNotExist:
             return []
