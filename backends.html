@@ -87,7 +87,7 @@
             
   <div class="section" id="backends">
 <h1>Backends<a class="headerlink" href="#backends" title="Permalink to this headline">¶</a></h1>
-<p>The Django authentication system (<tt class="docutils literal"><span class="pre">django.contrib.auth</span></tt>) delegates the
+<p>The Django authentication module (<tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt>) delegates the
 handling of logins and permission checking to separate authentication backend
 classes. This allows authentication methods besides the default username and
 password method to be easily integrated into the system.</p>
@@ -99,28 +99,35 @@ document for more details on how Django authentication works.</p>
 <dt id="email_auth.backends.EmailBackend">
 <em class="property">class </em><tt class="descclassname">email_auth.backends.</tt><tt class="descname">EmailBackend</tt><a class="headerlink" href="#email_auth.backends.EmailBackend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allow authentication via email address and password. To use this, add it to
-the <tt class="docutils literal"><span class="pre">AUTHENTICATION_BACKENDS</span></tt> list in your settings file.</p>
-<p>This backend inherits from the default backend - <tt class="docutils literal"><span class="pre">django.contrib.auth.backends.ModelBackend</span></tt> -
-and all the permission lookup methods (such as has_perm()) are left
-unchanged.</p>
+the <tt class="xref std std-setting docutils literal"><span class="pre">AUTHENTICATION_BACKENDS</span></tt> list in your settings file.</p>
+<p>This backend inherits from the default backend - <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.backends.ModelBackend</span></tt> -
+and all the permission lookup methods (such as <tt class="xref py py-func docutils literal"><span class="pre">has_perm()</span></tt>) are left
+unchanged i.e., permissions are determined in the same way as the default
+backend.</p>
 <dl class="function">
 <dt id="email_auth.backends.EmailBackend.authenticate">
 <tt class="descname">authenticate</tt><big>(</big><em>email=None</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#email_auth.backends.EmailBackend.authenticate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempt to authenticate a user from their email and password. If the
 authentication is successful, it returns the corresponding
-<tt class="docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt> instance. If it is unsuccessful, it
+<tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt> instance. If it is unsuccessful, it
 returns <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
 <p>If the email address is specified without a domain (i.e., just a username
-such as <tt class="docutils literal"><span class="pre">bob</span></tt>), then any default domains given in the <em class="xref std std-ref">default_domains</em>
+such as <tt class="docutils literal"><span class="pre">bob</span></tt>), then any default domains given in the <a class="reference internal" href="settings.html#std:setting-EMAIL_AUTH_DEFAULT_DOMAINS"><tt class="xref std std-setting docutils literal"><span class="pre">EMAIL_AUTH_DEFAULT_DOMAINS</span></tt></a>
 setting will be added to the username when attempting to authenticate.</p>
+<p>If multiple user accounts are found for a given email address, they are
+tested in the order they are returned from the database until one is
+found for which the password matches. If neccessary, this order can be
+specified through the <a class="reference internal" href="settings.html#std:setting-EMAIL_AUTH_ORDERING"><tt class="xref std std-setting docutils literal"><span class="pre">EMAIL_AUTH_ORDERING</span></tt></a> setting.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="email_auth.backends.EmailBackend.get_user_from_email">
-<tt class="descname">get_user_from_email</tt><big>(</big><em>email</em><big>)</big><a class="headerlink" href="#email_auth.backends.EmailBackend.get_user_from_email" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an user (an instance of the <tt class="docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt> class)
-from the corresponding email address. If no such user exists, it returns
-<tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<dt id="email_auth.backends.EmailBackend.get_users_from_email">
+<tt class="descname">get_users_from_email</tt><big>(</big><em>email</em>, <em>ordering=None</em><big>)</big><a class="headerlink" href="#email_auth.backends.EmailBackend.get_users_from_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of users (instances of the <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt>
+class) which have the given email address. If there is no user with the
+email address, an empty list is returned. If the <tt class="docutils literal"><span class="pre">ordering</span></tt> parameter
+is not <tt class="xref docutils literal"><span class="pre">None</span></tt>, the list is sorted by the fields specified in the
+parameter.</p>
 </dd></dl>
 
 </dd></dl>
@@ -186,7 +193,7 @@ from the corresponding email address. If no such user exists, it returns
         </div>
       </div>
               <h3>Last update:</h3>
-              <p class="topless">Sep 23, 2010</p>
+              <p class="topless">Sep 24, 2010</p>
           </div> 
         
       

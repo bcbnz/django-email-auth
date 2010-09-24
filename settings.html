@@ -94,6 +94,14 @@
 a username without a domain. If it is set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, then only the value the
 user enters will be used in the authentication attempt.</p>
 </div>
+<div class="section" id="email-auth-ordering">
+<span id="std:setting-EMAIL_AUTH_ORDERING"></span><h2>EMAIL_AUTH_ORDERING<a class="headerlink" href="#email-auth-ordering" title="Permalink to this headline">¶</a></h2>
+<p>Default: <tt class="xref docutils literal"><span class="pre">None</span></tt></p>
+<p>A tuple of strings defining the order in which to sort user accounts when more
+than one exists for a given email address. If <tt class="xref docutils literal"><span class="pre">None</span></tt>, no sorting is
+performed. For details on how to specify ordering in Django, see the <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields">QuerySet
+API documentation</a>.</p>
+</div>
 </div>
 
 
@@ -110,6 +118,7 @@ user enters will be used in the authentication attempt.</p>
   <ul>
 <li><a class="reference internal" href="#">Settings</a><ul>
 <li><a class="reference internal" href="#email-auth-default-domains">EMAIL_AUTH_DEFAULT_DOMAINS</a></li>
+<li><a class="reference internal" href="#email-auth-ordering">EMAIL_AUTH_ORDERING</a></li>
 </ul>
 </li>
 </ul>
@@ -154,7 +163,7 @@ user enters will be used in the authentication attempt.</p>
         </div>
       </div>
               <h3>Last update:</h3>
-              <p class="topless">Sep 23, 2010</p>
+              <p class="topless">Sep 24, 2010</p>
           </div> 
         
       

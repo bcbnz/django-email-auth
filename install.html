@@ -117,16 +117,37 @@ document.</p>
 will be logging in with email address with a common domain, you can specify a
 set of default domains through the <a class="reference internal" href="settings.html#std:setting-EMAIL_AUTH_DEFAULT_DOMAINS"><tt class="xref std std-setting docutils literal"><span class="pre">EMAIL_AUTH_DEFAULT_DOMAINS</span></tt></a>
 setting. If the user enters a username without a domain, the backend will then
-try the default domains (in order) to see if one successfully authenticates.
-For example, with the setting:</p>
+try the default domains (in order) to see if one successfully authenticates.</p>
+<p>For example, suppose the default domains are:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">EMAIL_AUTH_DEFAULT_DOMAINS</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s">&#39;example.com&#39;</span><span class="p">,</span>
     <span class="s">&#39;mysite.org&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>if the user enters the username <tt class="docutils literal"><span class="pre">bob</span></tt>, the backend will try to authenticate
+<p>If the user enters the username <tt class="docutils literal"><span class="pre">bob</span></tt>, the backend will try to authenticate
 them as <tt class="docutils literal"><span class="pre">bob&#64;example.com</span></tt> and then, if that fails, as <tt class="docutils literal"><span class="pre">bob&#64;mysite.org</span></tt>.</p>
+</div>
+<div class="section" id="multiple-accounts">
+<h2>Multiple accounts<a class="headerlink" href="#multiple-accounts" title="Permalink to this headline">¶</a></h2>
+<p>If multiple accounts exist for the email address being checked, the backend
+will try them in the order they are retrieved from the database. Once an
+account is found for which the password matches, the backend will assume that
+is the correct user and not check any further accounts.</p>
+<p>As the <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt> model does not specify a
+default order, the order they will be returned in is undefined and hence
+unpredictable. If you require them to be tested in a particular order, you
+can set the fields to order them by in the <a class="reference internal" href="settings.html#std:setting-EMAIL_AUTH_ORDERING"><tt class="xref std std-setting docutils literal"><span class="pre">EMAIL_AUTH_ORDERING</span></tt></a>
+setting. For example, to sort the user by first name and then the date of their
+last login:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">EMAIL_AUTH_ORDERING</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;first_name&#39;</span><span class="p">,</span>
+    <span class="s">&#39;last_login&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>For more details on specifying ordering in Django, see the <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields">QuerySet API
+documentation</a>.</p>
 </div>
 </div>
 
@@ -145,6 +166,7 @@ them as <tt class="docutils literal"><span class="pre">bob&#64;example.com</span
 <li><a class="reference internal" href="#">Installation</a><ul>
 <li><a class="reference internal" href="#basic-installation">Basic installation</a></li>
 <li><a class="reference internal" href="#default-domains">Default domains</a></li>
+<li><a class="reference internal" href="#multiple-accounts">Multiple accounts</a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +211,7 @@ them as <tt class="docutils literal"><span class="pre">bob&#64;example.com</span
         </div>
       </div>
               <h3>Last update:</h3>
-              <p class="topless">Sep 23, 2010</p>
+              <p class="topless">Sep 24, 2010</p>
           </div> 
         
       

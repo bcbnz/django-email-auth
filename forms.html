@@ -94,12 +94,12 @@
 <em class="property">class </em><tt class="descclassname">email_auth.forms.</tt><tt class="descname">AuthenticationForm</tt><a class="headerlink" href="#email_auth.forms.AuthenticationForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>A form to show an authentication form for users attempting to login via
 email address and password. This is designed as a direct replacement for
-the <tt class="docutils literal"><span class="pre">django.contrib.auth.forms.AuthenticationForm</span></tt> form.</p>
+the <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.AuthenticationForm</span></tt> form.</p>
 <p>In Django 1.2 or later, you can specify the form to be used with the login
 view when configuring your URLconf. To use this form for logins, pass it as
-the value for the <tt class="docutils literal"><span class="pre">authentication_form</span></tt> argument to the
-<tt class="docutils literal"><span class="pre">django.contrib.auth.views.login</span></tt> view:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mysite.email_auth.forms</span> <span class="kn">import</span> <span class="n">AuthenticationForm</span>
+the value for the <tt class="xref py py-attr docutils literal"><span class="pre">authentication_form</span></tt> argument to the
+<tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.login</span></tt> view:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">email_auth.forms</span> <span class="kn">import</span> <span class="n">AuthenticationForm</span>
 
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
     <span class="o">....</span>
@@ -110,34 +110,34 @@ the value for the <tt class="docutils literal"><span class="pre">authentication_
 </pre></div>
 </div>
 <p>See the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/auth/">Django authentication documentation</a>
-for details of the <tt class="docutils literal"><span class="pre">login</span></tt> view, or the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/">URL dispatcher</a> documentation for
+for details of the <tt class="xref py py-class docutils literal"><span class="pre">login</span></tt> view, or the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/">URL dispatcher</a> documentation for
 details on how to write URLconfs.</p>
 <p>If you are designing templates specifically for this form, note that the
-email address is entered in a field called <tt class="docutils literal"><span class="pre">username</span></tt>. This is in order to
-allow templates designed for the default login form to work seamlessly with
-this form.</p>
+email address is entered in a field called <tt class="xref py py-attr docutils literal"><span class="pre">username</span></tt>. This is in
+order to allow templates designed for the default login form to work
+seamlessly with this form.</p>
 <dl class="function">
 <dt id="email_auth.forms.AuthenticationForm.clean">
 <tt class="descname">clean</tt><big>(</big><big>)</big><a class="headerlink" href="#email_auth.forms.AuthenticationForm.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process the form and attempt to log the user in with the details they
 provided. If the login was successful, the form data is returned. If the
-login is unsuccessful, a <tt class="docutils literal"><span class="pre">django.forms.ValidationError</span></tt> is raised with
-a message explaining why it did not succeed.</p>
+login is unsuccessful, a <tt class="xref py py-exc docutils literal"><span class="pre">django.forms.ValidationError</span></tt> is
+raised with a message explaining why it did not succeed.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="email_auth.forms.AuthenticationForm.get_user_id">
 <tt class="descname">get_user_id</tt><big>(</big><big>)</big><a class="headerlink" href="#email_auth.forms.AuthenticationForm.get_user_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the user ID of the user logged in by the form. If no user was logged
-in, this function returns None.</p>
+in, this function returns <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="email_auth.forms.AuthenticationForm.get_user">
 <tt class="descname">get_user</tt><big>(</big><big>)</big><a class="headerlink" href="#email_auth.forms.AuthenticationForm.get_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the user object (an instance of <tt class="docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt>)
+<dd><p>Get the user object (an instance of <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt>)
 corresponding to the user logged in by the form. If no user was logged
-in, this function returns None.</p>
+in, this function returns <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -203,7 +203,7 @@ in, this function returns None.</p>
         </div>
       </div>
               <h3>Last update:</h3>
-              <p class="topless">Sep 23, 2010</p>
+              <p class="topless">Sep 24, 2010</p>
           </div> 
         
       
