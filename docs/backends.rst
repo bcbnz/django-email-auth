@@ -35,12 +35,13 @@ EmailBackend
 
       If multiple user accounts are found for a given email address, they are
       tested in the order they are returned from the database until one is
-      found for which the password matches. As the :class:`django.contrib.auth.models.User`
-      model does not specify a default order, the order they will be tested in
-      is undefined.
+      found for which the password matches. If neccessary, this order can be
+      specified through the :setting:`EMAIL_AUTH_ORDERING` setting.
 
-   .. function:: get_users_from_email(email)
+   .. function:: get_users_from_email(email, ordering=None)
 
       Get a list of users (instances of the :class:`django.contrib.auth.models.User`
       class) which have the given email address. If there is no user with the
-      email address, an empty list is returned.
+      email address, an empty list is returned. If the ``ordering`` parameter
+      is not ``None``, the list is sorted by the fields specified in the
+      parameter.

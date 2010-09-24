@@ -48,7 +48,7 @@ class EmailBackend(ModelBackend):
             return None
 
         # Only load the ordering once per request
-        ordering = getattr(settings, 'EMAIL_AUTH_ORDERING', ())
+        ordering = getattr(settings, 'EMAIL_AUTH_ORDERING', None)
 
         # Domain given
         if '@' in username:
@@ -82,9 +82,10 @@ class EmailBackend(ModelBackend):
         # Nobody found
         return None
 
-    def get_users_from_email(self, email, ordering):
+    def get_users_from_email(self, email, ordering=None):
         # Search for a user
         try:
-            return User.objects.filter(email=email).order_by(*ordering)
-        except User.DoesNotExist:
-            return []
+            if ordering is None:
+                return User.objects.filter(email=email)
+            else:
+                return User.objects.filter(email=email).order_by(*ordering)

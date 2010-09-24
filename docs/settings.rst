@@ -17,14 +17,9 @@ user enters will be used in the authentication attempt.
 EMAIL_AUTH_ORDERING
 -------------------
 
-Default: ``()`` (Empty tuple)
+Default: ``None``
 
 A tuple of strings defining the order in which to sort user accounts when more
-than one exists for a given email address. An empty tuple means that the
-ordering is undefined (and hence unpredictable). For example, to sort the user
-by first name and then the date of their last login::
-
-    EMAIL_AUTH_ORDERING = (
-        'first_name',
-        'last_login',
-    )
+than one exists for a given email address. If ``None``, no sorting is
+performed. For details on how to specify ordering in Django, see the `QuerySet
+API documentation <http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields>`_.
