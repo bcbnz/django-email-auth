@@ -63,3 +63,38 @@ last login::
 
 For more details on specifying ordering in Django, see the `QuerySet API
 documentation <http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields>`_.
+
+Custom forms
+------------
+
+The default Django authentication form (:class:`django.contrib.auth.forms.AuthenticationForm`)
+prompts the user for a username and password which is confusing when an email
+and password is required. Additionally, the error messages are tailored for the
+username-and-password situation, another point of confusion.
+
+To better integrate the backend with your user interface, your login views 
+should use a form designed to work with an email login. To this end, a suitable
+form (:class:`email_auth.forms.AuthenticationForm`) for use with the backend is
+included. For more specialised situations (for example, if you have more than
+one backend in use), you will need to create your own forms to suit.
+
+In Django 1.2 and later, the login view provided by the authentication module
+(:class:`django.contrib.auth.views.login`) takes an optional parameter, 
+:attr:`authentication_form`, specifying the form to use in the view. This 
+allows you to customise the form displayed to the user without having to 
+duplicate the view code. To tell it which form to use, write your URLconf along
+the following lines::
+
+       from email_auth.forms import AuthenticationForm
+
+       urlpatterns = patterns('',
+           ....
+           (r'^accounts/login', 'django.contrib.auth.views.login',
+            {'authentication_form': AuthenticationForm}),
+           ....
+       )
+
+See the `Django authentication documentation <http://docs.djangoproject.com/en/dev/topics/auth/>`_
+for details of the :class:`login` view, or the `URL dispatcher 
+<http://docs.djangoproject.com/en/dev/topics/http/urls/>`_ documentation for
+details on how to write URLconfs.
