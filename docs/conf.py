@@ -57,7 +57,7 @@ latex_font_size = '10pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('newindex', 'django-email-auth.tex', u'django-email-auth Documentation',
+  ('index', 'django-email-auth.tex', u'django-email-auth Documentation',
    u'Blair Bonnett', 'manual'),
 ]
 
@@ -66,6 +66,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('newindex', 'django-email-auth', u'django-email-auth Documentation',
+    ('index', 'django-email-auth', u'django-email-auth Documentation',
      [u'Blair Bonnett'], 1)
 ]
