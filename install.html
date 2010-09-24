@@ -149,6 +149,37 @@ last login:</p>
 <p>For more details on specifying ordering in Django, see the <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#order-by-fields">QuerySet API
 documentation</a>.</p>
 </div>
+<div class="section" id="custom-forms">
+<h2>Custom forms<a class="headerlink" href="#custom-forms" title="Permalink to this headline">¶</a></h2>
+<p>The default Django authentication form (<tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.AuthenticationForm</span></tt>)
+prompts the user for a username and password which is confusing when an email
+and password is required. Additionally, the error messages are tailored for the
+username-and-password situation, another point of confusion.</p>
+<p>To better integrate the backend with your user interface, your login views
+should use a form designed to work with an email login. To this end, a suitable
+form (<a class="reference internal" href="forms.html#email_auth.forms.AuthenticationForm" title="email_auth.forms.AuthenticationForm"><tt class="xref py py-class docutils literal"><span class="pre">email_auth.forms.AuthenticationForm</span></tt></a>) for use with the backend is
+included. For more specialised situations (for example, if you have more than
+one backend in use), you will need to create your own forms to suit.</p>
+<p>In Django 1.2 and later, the login view provided by the authentication module
+(<tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.login</span></tt>) takes an optional parameter,
+<tt class="xref py py-attr docutils literal"><span class="pre">authentication_form</span></tt>, specifying the form to use in the view. This
+allows you to customise the form displayed to the user without having to
+duplicate the view code. To tell it which form to use, write your URLconf along
+the following lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">email_auth.forms</span> <span class="kn">import</span> <span class="n">AuthenticationForm</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="o">....</span>
+    <span class="p">(</span><span class="s">r&#39;^accounts/login&#39;</span><span class="p">,</span> <span class="s">&#39;django.contrib.auth.views.login&#39;</span><span class="p">,</span>
+     <span class="p">{</span><span class="s">&#39;authentication_form&#39;</span><span class="p">:</span> <span class="n">AuthenticationForm</span><span class="p">}),</span>
+    <span class="o">....</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/auth/">Django authentication documentation</a>
+for details of the <tt class="xref py py-class docutils literal"><span class="pre">login</span></tt> view, or the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/">URL dispatcher</a> documentation for
+details on how to write URLconfs.</p>
+</div>
 </div>
 
 
@@ -167,6 +198,7 @@ documentation</a>.</p>
 <li><a class="reference internal" href="#basic-installation">Basic installation</a></li>
 <li><a class="reference internal" href="#default-domains">Default domains</a></li>
 <li><a class="reference internal" href="#multiple-accounts">Multiple accounts</a></li>
+<li><a class="reference internal" href="#custom-forms">Custom forms</a></li>
 </ul>
 </li>
 </ul>
