@@ -6,6 +6,13 @@ The source code for django-email-auth is tracked using the `Git
 `GitHub <http://github.com/>`_ at the URL
 http://github.com/blairbonnett/django-email-auth/.
 
+Stable version
+--------------
+
+Stable versions of the code will be posted at the `project downloads page
+<http://github.com/blairbonnett/django-email-auth/downloads>`_ at GitHub when
+they are available.
+
 Development version
 -------------------
 
